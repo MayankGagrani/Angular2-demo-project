@@ -1,0 +1,19 @@
+<div class="row P15">
+  <div class="col-lg-6 col-xs-11 ">
+    <form #patientForm="ngForm" (keydown)="keyDownPatientForm(patientForm,$event)">
+      <div class="form-group MB16">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control field_color input-height" id="first_name" placeholder = "Enter movie name..." required >
+       <!--  <div *ngIf="first_name.errors && (first_name.dirty || first_name.touched || submitted)" class="error">
+          <div [hidden]="!first_name.errors.required">
+           First   Name is required!
+         </div>
+         <div [hidden]="!first_name.hasError('pattern')">Special charecters or numbers are not allowed</div>
+       </div> -->
+     </div>
+
+    </form>
+    <button class="btn btn-primary">save</button>
+  </div>
+</div>
+

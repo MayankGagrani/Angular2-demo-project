@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+  <div class="modal-content P15" style="border-radius:0">
+   <div class="modal-header" style="border:none">
+     <!-- <button type="button" class="close" (click)="close()" >&times;</button> -->
+     <h4 class="modal-title">{{title || 'Confirm'}}</h4>
+   </div>
+   <div class="modal-body">
+     <p>{{message || 'Are you sure?'}}</p>
+   </div>
+   <div class="modal-footer " style="border:none">
+     <button type="button"  class="btn btn-primary pull-left action bg_color MR15" (click)="confirm()">{{leftButton || 'Yes'}}</button>
+     <button type="button" class="btn btn-defaul pull-left cancel bg_white" (click)="cancel()">{{rightButton || 'No'}}</button>
+   </div>
+ </div>
+</div>
