@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,16 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 
 export class HeaderComponent implements OnInit {
+	currentUser: User;
+    users: User[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+  	this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  	
+  }
 
   ngOnInit() {
+
   }
 
 }

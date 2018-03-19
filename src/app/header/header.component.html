@@ -1,4 +1,4 @@
-<div >
+<!-- <div >
 	<h1 > Welcome to Angular App!!</h1>
 </div>
 
@@ -9,4 +9,63 @@
 
 <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
   <a [routerLink]="['/register']">Register</a>
-</li>
+</li> -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="row bg_color">
+  <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap ">
+    <nav class="navbar navbar-default topHeader" >
+      <div class="container-fluid" style = "background-color: #17c9ff">
+      	<div class="navbar-header" style = "margin-top:6px;" >
+      		<p>You're logged in with Angular 2!!</p>
+      	</div>
+	      	<ul class="nav navbar-nav navbar-right">
+	          <li class="dropdown">
+	            <a href="#" class="dropdown-toggle P15" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+	              {{currentUser.firstName}} {{currentUser.lastName}}
+	              <span class="caret"></span>
+	            </a> 
+	            <ul class="dropdown-menu">
+	              <li>
+	                <div style="display: table;">
+	                  <div class="profile-square-box">{{currentUser.firstName[0]}}
+	                  </div>
+	                  <div style="color:black;display: table-cell;padding-left: 15px;vertical-align: top;">
+	                    <div class="frst-name"> {{currentUser.firstName}}</div>
+	                    <div class="email"> {{currentUser.email}}</div>
+	                    <div style="margin-top: 5px;">
+	                      <button class="btn btn-view-profile" (click)="viewProfile()"> VIEW PROFILE </button>
+	                    </div>
+	                  </div>
+	                </div>
+	              </li>
+	              <li class="sign-out-wrap">
+	                <div class="logout" (click)="resetPassword()">
+	                  <i style="font-size: 16px;margin-left: -2px;" class="fa fa-key fa-fw"></i>Reset Password</div>
+	                <div class="logout" (click)="logout()">
+	                  <i style="font-size: 16px;" class="fa fa-sign-out"></i>Sign Out
+	                </div>
+	              </li>
+	            </ul>
+	          </li>
+	        </ul>
+
+	        <ul class="nav navbar-nav navbar-right" >
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/home']">Home</a>
+          </li>
+
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/book']">Book</a>
+          </li>
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/user']">Users</a>
+          </li>
+          <!-- <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <a [routerLink]="['/admin/departments']">Departments</a>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+ </div>

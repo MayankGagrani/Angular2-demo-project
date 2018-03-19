@@ -10,7 +10,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { HttpModule } from '@angular/http';
 import { SharedService} from '../service/shared.service';
 import { ModalConfirmComponent} from '../modal-confirm/modal-confirm.component';
-
+import { DeleteModalComponent} from '../delete-modal/delete-modal.component';
+ 
  export interface userModel{
    model: Model;
  }
@@ -21,6 +22,10 @@ import { ModalConfirmComponent} from '../modal-confirm/modal-confirm.component';
    email: string;
    username: string;
    id: string;
+   password: string;
+   phone_number: string;
+   sex: string;
+   date_of_birth: string;
 
  }
 
@@ -39,12 +44,14 @@ export class UserlistComponent implements OnInit {
     //model:any= {};
     public modalRef: BsModalRef;
     public showError:boolean = false;
-    public ufirstname: string;    
+    public deleteMsg:boolean = false; 
+    public alertMessage: string;
+    public mask = [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]   
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
   constructor( private router: Router, private userService: UserService, private modalService: BsModalService, private dialogService: DialogService,private sharedService : SharedService ) { 
   	this.users = JSON.parse(localStorage.getItem('users'));
-    //this.user;
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.model = new Model();
     //this.ufirstname = this.sharedService.getUser();
      this.model.firstName = '';
@@ -52,6 +59,10 @@ export class UserlistComponent implements OnInit {
      this.model.email = '';
      this.model.username = '';
      this.model.id = '';
+     this.model.password = '';
+     this.model.sex = '';
+     this.model.date_of_birth = '';
+     this.model.phone_number = '';
     //this.router.navigate(['/register,this.user.id']);
   }
 
@@ -64,36 +75,65 @@ export class UserlistComponent implements OnInit {
     this.model.username = user.username;
     this.model.email = user.email;
     this.model.id = user.id;
+    this.model.password = user.password;
+    this.model.sex = user.sex;
+    this.model.date_of_birth = user.date_of_birth;
+    this.model.phone_number = user.phone_number;
     this.updateModal.show();
     }
 
-   deleteUser(user) {
+   deleteUser(user,currentUser) {
     this.dialogService.addDialog(ModalConfirmComponent, {
       title: 'Are you sure you want to delete the user?',
-      message: 'User Name: '+ user.firstName + ' ' + user.lastName
+      message: 'User Name: '+ user.firstName + ' ' + user.lastName + ' ' +  
+               'Id: '+ user.id
     })
     .subscribe((isConfirmed)=> {
      if(isConfirmed){  
-        this.userService.delete(user.id)
+        this.userService.delete(user.id,currentUser)
           .subscribe(response => {
-                 this.router.navigate[('/user')];
-        
-          });
+            this.showConfirm(user);
+            this.router.navigate(['home']);
+          },(err) => {
+                this.deleteMsg = true;
+                this.alertMessage = err.split(",");
+
+        });
       }
     });
   }
 
     updateUser(model) {
-      debugger
       let obj = {
       "model" : this.model
     };
     this.userService.update(model)
-      .subscribe(response => 
-          { this.users;});
+      .subscribe(response => {
+          this.updateModal.hide();
+          this.router.navigate (['home']);
+      });
      }  
 
     onCloseHandled(){
       this.updateModal.hide();
+    }
+
+    public showConfirm(user)
+    {
+      this.dialogService.addDialog(DeleteModalComponent,{
+        title: 'User has been deleted successfully',
+           message: 'User Name: '+ user.firstName + ' ' + user.lastName 
+      })
+      .subscribe((isConfirmed) => {
+          this.router.navigate(['home'])
+        });
+
+    }
+
+    public closeErrorAlert(){
+      if(this.deleteMsg == true)
+      {
+        this.deleteMsg = false;
+      }
     }
 }

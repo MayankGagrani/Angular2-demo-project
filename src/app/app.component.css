@@ -1,14 +1,19 @@
 .jumbotron{
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding-top: 7px;
+	padding-bottom: 355px;
 	margin-bottom: 30px;
 	color: inherit;
 	background-color: #eee;
 }
 
 .container{
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 8px;
+	padding-right: 8px;
 	margin-right: auto;
-	margin-left: auto;
+	margin-left: 40px;
+}
+
+.navabar-default{
+	margin-top: -16px;
+	background-color: #337ab7;
 }

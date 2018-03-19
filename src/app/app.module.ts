@@ -24,6 +24,10 @@ import { HomeComponent } from './home/home.component';
 import { UserlistComponent } from './userlist/userlist.component';  
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { TextMaskModule } from 'angular2-text-mask';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BooksComponent } from './books/books.component';
 //import { MoviesService} from './movies.service'
 
 
@@ -37,7 +41,10 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
     RegisterComponent,
     HomeComponent,
     UserlistComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    DeleteModalComponent,
+    UserProfileComponent,
+    BooksComponent
     
   ],
   imports: [
@@ -47,13 +54,14 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
     HttpClientModule,
     FormsModule,
     routing,
+    TextMaskModule,
     //BrowserAnimationsModule,
     //BsModalModule,
    BootstrapModalModule.forRoot({container:document.body}),
     ModalModule.forRoot()
   ],
   providers: [AuthenticationService,UserService,AlertService,fakeBackendProvider,SharedService],
-  entryComponents: [ModalConfirmComponent],
+  entryComponents: [ModalConfirmComponent,DeleteModalComponent],
   //exports: [ModalConfirmComponent],
   bootstrap: [AppComponent],
 })

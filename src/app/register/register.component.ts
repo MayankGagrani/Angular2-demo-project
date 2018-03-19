@@ -26,7 +26,10 @@ export class RegisterComponent implements OnInit {
   public showError:boolean= false;
   public model:Model;
   public loading = false;
+  public showPhoneWar:boolean = false; 
+  pwdPattern = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{6,12}$";
   //users: any= {};
+  public mask = [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
   
 
   constructor(private router: Router, private userService: UserService, private alertService: AlertService, private sharedService : SharedService) { 
@@ -39,8 +42,6 @@ export class RegisterComponent implements OnInit {
     //model:any;
   ngOnInit() {
     // this.msg = "Registration successful";
-    //this.users = JSON.parse(localStorage.getItem('users'));
-    //this.sharedService.setUser("fjdhfjhdj");
 
   }
 
@@ -51,7 +52,6 @@ export class RegisterComponent implements OnInit {
     };
     this.userService.create(obj)
         .subscribe(response => {
-          debugger
           // if(response.success){
                 //this.alertService.success('Registration successful', true);
                 this.router.navigate(['login']);
@@ -69,5 +69,19 @@ export class RegisterComponent implements OnInit {
   //     this.showError = false
   //   }
   // }
+
+  public validatePhoneNumberLength(event){
+    if (event) {
+      this.showPhoneWar = true;
+      var updatedLength = event.length;
+      if (updatedLength == 12 || updatedLength == 0) {
+        this.showPhoneWar = false;
+      }
+    }
+    else {
+      this.showPhoneWar = false;
+    }
+
+  }
 
 }

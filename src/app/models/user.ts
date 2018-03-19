@@ -5,4 +5,7 @@ export class User {
     firstName: string;
     lastName: string;
     email: string;
+    sex :string;
+    date_of_birth: string;
+    phone_number: string;
 }

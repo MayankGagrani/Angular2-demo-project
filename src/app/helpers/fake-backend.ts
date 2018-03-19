@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { User } from '../models/user'; 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
@@ -12,10 +14,13 @@ import 'rxjs/add/operator/dematerialize';
 export class FakeBackendInterceptor implements HttpInterceptor {
      public urlParts:string;
      public id:number;
+     currentUser: User;
 
-    constructor() { }
+    constructor(private router : Router) {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser')); }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
+    {
         // array in local storage for registered users
         let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
 
@@ -79,7 +84,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             // create user
             if (request.url.endsWith('/api/users') && request.method === 'POST') {
-              debugger
                 // get new user object from post body
                 let newUser = request.body.model;
 
@@ -93,7 +97,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 let u = users.length - 1;
                 newUser.id = users[u].id + 1;
                 users.push(newUser);
-                debugger
                 localStorage.setItem('users', JSON.stringify(users));
                 // return users;
 
@@ -104,23 +107,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             //update user
             if (request.url.match(/\/api\/users\/\d+$/) && request.method === 'PUT') {
             //     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-                debugger
                 let updateUser = request.body;
-                debugger
                 for(let j = 0; j < users.length; j++)
                 {
-                    if(users[j].id == updateUser.id)
-                    {
-                        users[j].push(updateUser);
+                    let user = users[j]
+                    if(user.id == updateUser.id)
+                    {   
+                        users.splice(j,1, updateUser);
+                        // users.splice(j,1);  
+                        // users.push(updateUser);
                         localStorage.setItem('users', JSON.stringify(users));
                         break;
                     }  
                 }
-                //users.push(updateUser);
+                // users.push(updateUser);
                 // localStorage.setItem('users', JSON.stringify(users));
                 // return users;
                 // respond 200 OK
-                return Observable.of(new HttpResponse({ status: 200 , body: request.body}));
+                return Observable.of(new HttpResponse({ status: 200 , body: users}));
             }
 
             //         return Observable.of(new HttpResponse({ status: 200, body: users }));
@@ -135,18 +139,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     let id = parseInt(urlParts[urlParts.length - 1]);
                     for (let i = 0; i < users.length; i++) {
                         let user = users[i];
-                        if (user.id === id) {
-                            // delete user
-                            users.splice(i, 1);
-                            localStorage.setItem('users', JSON.stringify(users));
-                            break;
-                        }
+                        if(this.currentUser.id != id)
+                        {
+                          if (user.id === id) {
+                          // delete user
+                                            users.splice(i, 1);
+                          localStorage.setItem('users', JSON.stringify(users));
+                          //this.router.navigate(['/user']);
+                          break;
+                          }
+                       }
+                       else
+                       {
+                          return Observable.throw('Cant delete current login user'); 
+                       }
                     }
-                    
                     
                     // respond 200 OK
                     return Observable.of(new HttpResponse({ status: 200, body: users }));
-                    
                 }       
 
             // pass through any requests not handled above

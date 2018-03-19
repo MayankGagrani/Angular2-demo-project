@@ -1,22 +1,33 @@
-<div class="col-md-6 col-md-offset-3">
-  <h1>Hi {{currentUser.firstName}} {{currentUser.lastName}} !</h1>
-  <p>You're logged in with Angular 2!!</p>
-  
+<div class="bg_grey VH100 ">
+  <div class="fg_color container ">
+			<div class="row bg_color">
+		    <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap" style ="width:1260px; ">
+		      <app-header></app-header>
+		    </div>
+			</div>
+			<div class="col-md-6 col-md-offset-3">
+							  
+					<!-- <h1> Hi {{currentUser.firstName}} {{currentUser.lastName}} </h1> -->
+							  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+							  <a [routerLink]="['/weather']">weather</a>
+							</li>
 
-  <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-  <a [routerLink]="['/weather']">weather</a>
-</li>
+							<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+							  <a [routerLink]="['/movies']">Movies</a>
+							</li>
 
-<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-  <a [routerLink]="['/movies']">Movies</a>
-</li>
+							<!-- <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+							  <a [routerLink]="['/profile']">Profile</a>
+							</li>
 
-<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-  <a [routerLink]="['/user']">Get all user</a>
-</li>
+							<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+							  <a [routerLink]="['/user']">Get all user</a>
+							</li> -->
 
 
-    <p>
-    	<a [routerLink]="['/login']">Logout</a>
-    </p>
+							    <p>
+							    	<a [routerLink]="['/login']">Logout</a>
+							    </p>
+					</div>
+	</div>
 </div>

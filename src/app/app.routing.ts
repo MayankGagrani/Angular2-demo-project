@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { UserlistComponent } from './userlist/userlist.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BooksComponent } from './books/books.component';
 
 
 const indexRoutes: Routes = [
@@ -17,10 +19,12 @@ const indexRoutes: Routes = [
    { path: 'login',component:LoginComponent, pathMatch: 'full', canActivate: [] },
    { path: 'register',component:RegisterComponent, pathMatch: 'full', canActivate: [] },
 
-    // { path: 'register/:id',component:RegisterComponent, pathMatch: 'full', canActivate: [] },
+   { path: 'profile',component:UserProfileComponent, pathMatch: 'full', canActivate: [] },
 
    { path: 'home',component:HomeComponent, pathMatch: 'full', canActivate: [] },
    { path: 'user',component:UserlistComponent, pathMatch: 'full', canActivate: [] },
+
+   { path: 'book',component:BooksComponent, pathMatch: 'full', canActivate: [] },
   // { path: PHMT.ROUTERLINKS.NOACCESS, component: PageNotAuthorizedComponent, pathMatch: 'full', canActivate: []  },
    { path: '**', redirectTo: ''  }
   

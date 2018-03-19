@@ -1,7 +1,23 @@
-<h3>All registered users:</h3>
-<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+
+<div class="row bg_color">
+    <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap" style="width: 1260px;">
+      <app-header></app-header>
+    </div>
+	</div>
+
+<div class="MT20" *ngIf="deleteMsg">
+  <div class="alert alert-danger fade in">
+     <span class="close" (click)="closeErrorAlert()">x</span> 
+      {{ alertMessage }}
+  </div>
+</div> 
+
+
+<!-- <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
   <a [routerLink]="['/home']">Back</a>
-</li>
+</li> -->
+
+
 <div class = "row" >
  	<div class="col-xs-12 table-responsive"  style="text-align:center;">
 	  <table class="table container-white custom_tbl">
@@ -11,6 +27,9 @@
 	  	    <th class="ft_dark width24">LastName</th>
 	  	    <th class="ft_dark">Username</th>
 	  	    <th class="ft_dark">Email</th>
+	  	    <th class="ft_dark">sex</th>
+	  	    <th class="ft_dark">DOB</th>
+	  	    <th class="ft_dark">phone_number</th>
 	  	    <th></th>
 	  	    <th></th>
 	  	  </tr>
@@ -21,8 +40,12 @@
 	  			<td class = "P16">{{user.lastName}}</td>
 	  			<td class = "P16">{{user.username}}</td>
 	  			<td class = "P16">{{user.email}}</td>
+	  			<td class = "P16">{{user.sex}}</td>
+	  			<td class = "P16">{{user.date_of_birth}}</td>
+	  			<td class = "P16">{{user.phone_number}}</td>
+
 	  			<td>
-	  			  <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="deleteUser(user)">Delete</button>
+	  			  <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="deleteUser(user,currentUser)">Delete</button>
 	  			</td>
 	  			<td>
 	  				 <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="openModal(user)">Update
@@ -60,6 +83,38 @@
 		            <label for="lastName">Last Name</label>
 		            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
 		            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
+		        </div>
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !sex.valid }">
+		            <label for="sex">Sex</label>
+		            <!-- <input type="radio" class="form-control" name="male" value="M" [(ngModel)]="model.sex" #sex="ngModel" required /> -->
+		            <label class="radio-inline">
+		            <input style="margin-top:4px;" type="radio" name="male" value="M" [(ngModel)]="model.sex" (click)="model.sex='M'">Male
+		              </label>
+		            <label class="radio-inline">
+		            <input style="margin-top:4px;" type="radio" name="male" value="F" [(ngModel)]="model.sex" (click)= "model.sex='F'">Female
+		              </label>
+		            <div *ngIf="f.submitted && !sex.valid" class="help-block">*Please select sex</div>
+		        </div>
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !date_of_birth.valid }">
+		            <label for="dob">DOB</label>
+		            <input type="text" class="form-control" name="dob" [(ngModel)]="model.date_of_birth" placeholder="DD/MM/YY" #dob="ngModel" required />
+		            <!-- <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> -->
+		            <div *ngIf="dob.errors && f.submitted" class="error">
+		                DOB is required!
+		              </div>
+		        </div>
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone_number.valid }">
+		            <label for="phone_number">Phone number</label>
+		            <input [textMask]="{mask: mask}" type="text"  class="form-control" name="phone_number" [(ngModel)]="model.phone_number" placeholder="Mobile Number" #phone_number="ngModel" (ngModelChange)="validatePhoneNumberLength($event)" required />
+		            <!-- <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> -->
+		            <div *ngIf="phone_number.errors && (phone_number.dirty || phone_number.touched || submitted)" class="error">
+		              <div [hidden]="!phone_number.errors.required">
+		                Phone Number is required!
+		              </div>
+		            </div>
+		            <div *ngIf="showPhoneWar" class="error">
+		              <p>Please enter 10 digits<p>
+		            </div>
 		        </div>
 		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
 		            <label for="email">Email</label>

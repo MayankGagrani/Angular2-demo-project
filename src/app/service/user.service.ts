@@ -20,17 +20,15 @@ export class UserService {
     }
     
     create(user) {
-      debugger
         return this.http.post('/api/users', user)
         //.map(response =>  response.json() );
     }
 
     update(model) {
-      debugger
         return this.http.put('/api/users/' + model.id, model);
     }
 
-    delete(id) {
+    delete(id,currentUser) {
       return this.http.delete('/api/users/' + id)
       // .map((response: any) => {
       //   console.log(response);
