@@ -23,7 +23,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     {
         // array in local storage for registered users
         let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
-
+        let books: any[] = JSON.parse(localStorage.getItem('books')) || []; 
         // wrap in delayed observable to simulate server api call
         return Observable.of(null).mergeMap(() => {
 
@@ -93,9 +93,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return Observable.throw('Username "' + newUser.username + '" is already taken');
                 }
 
-                // save new user
-                let u = users.length - 1;
-                newUser.id = users[u].id + 1;
+                // save new user\
+                if(users.length == 0)
+                {
+                    newUser.id = 1;
+                    } 
+                else
+                {
+                  let u = users.length - 1;
+                    newUser.id = users[u].id + 1;
+                }
                 users.push(newUser);
                 localStorage.setItem('users', JSON.stringify(users));
                 // return users;
@@ -104,6 +111,31 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return Observable.of(new HttpResponse({ status: 200 , body: request.body.model}));
             }
 
+            //create book
+            if (request.url.endsWith('/api/books') && request.method === 'POST') {
+                // get new book object from post body
+                let newBook = request.body.book;
+
+                // validation
+                let duplicateBook = books.filter(book => { return book.bookTitle === newBook.bookTitle; }).length;
+                if (duplicateBook) {
+                    return Observable.throw('bookTitle "' + newBook.bookTitle + '" is already taken');
+                }
+                // save new book
+                if (books.length == 0){
+                  newBook.bookId = 1; 
+                }
+                else
+                {
+                    let b = books.length - 1;
+                      newBook.bookId = books[b].bookId + 1;
+                }
+                books.push(newBook);
+                localStorage.setItem('books', JSON.stringify(books));
+                 // return users;
+                // respond 200 OK
+                return Observable.of(new HttpResponse({ status: 200 , body: request.body.book}));
+            }
             //update user
             if (request.url.match(/\/api\/users\/\d+$/) && request.method === 'PUT') {
             //     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
@@ -126,11 +158,64 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 // respond 200 OK
                 return Observable.of(new HttpResponse({ status: 200 , body: users}));
             }
+            //UPDATE book
+            if (request.url.match(/\/api\/books\/\d+$/) && request.method === 'PUT') {
+            //     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+                let updateBook = request.body;
+                for(let j = 0; j < books.length; j++)
+                {
+                    let book = books[j]
+                    if(book.bookId == updateBook.bookId)
+                    {   
+                        books.splice(j,1, updateBook);
+                        // users.splice(j,1);  
+                        // users.push(updateUser);
+                        localStorage.setItem('books', JSON.stringify(books));
+                        break;
+                    }  
+                }
+                // users.push(updateUser);
+                // localStorage.setItem('users', JSON.stringify(users));
+                // return users;
+                // respond 200 OK
+                return Observable.of(new HttpResponse({ status: 200 , body: books}));
+            }
+            //resetPassword
+            if (request.url.endsWith('/api/users') && request.method === 'PUT') {
+            //     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+                let resetPassword = request.body;
+                let userId = users[(this.currentUser.id)+1];
+                if(userId.password == resetPassword.oldPassword){
+                    if (resetPassword.newPassword == resetPassword.confirmPassword)
+                    {
+                        userId.password = resetPassword.newPassword;
+                    }
+                    else{
+                        return Observable.throw('New Password and Confirm Password does not match')
+                    }
+                }
+                else{
+                    return Observable.throw('Old Password is not correct')
+                }
+                for(let j = 0; j < users.length; j++)
+                {
+                    let user = users[j]
+                    if(user.id == this.currentUser.id)
+                    {   
+                        users.splice(j,1, userId);
+                        // users.splice(j,1);  
+                        // users.push(updateUser);
+                        localStorage.setItem('users', JSON.stringify(users));
+                        break;
+                    }  
+                }
+                // users.push(updateUser);
+                // localStorage.setItem('users', JSON.stringify(users));
+                // return users;
+                // respond 200 OK
+                return Observable.of(new HttpResponse({ status: 200 , body: users}));
+            }
 
-            //         return Observable.of(new HttpResponse({ status: 200, body: users }));
-            //         // return 401 not authorised if token is null or invalid
-            //         return Observable.throw('Unauthorised');
-            //     }
 
             // delete user
             if (request.url.match(/\/api\/users\/\d+$/) && request.method === 'DELETE') {
@@ -158,6 +243,27 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     // respond 200 OK
                     return Observable.of(new HttpResponse({ status: 200, body: users }));
                 }       
+                //delete book
+                if (request.url.match(/\/api\/books\/\d+$/) && request.method === 'DELETE') {
+                        // find book by id in books array
+                        let urlParts = request.url.split('/');
+                        let id = parseInt(urlParts[urlParts.length - 1]);
+                        for (let i = 0; i < books.length; i++) {
+                            let book = books[i];
+                        
+                              if (book.bookId === id) {
+                              // delete user
+                              books.splice(i, 1);
+                              localStorage.setItem('books', JSON.stringify(books));
+                              //this.router.navigate(['/user']);
+                              break;
+                              }
+                           
+                      }
+                        
+                        // respond 200 OK
+                        return Observable.of(new HttpResponse({ status: 200, body: books }));
+                    }       
 
             // pass through any requests not handled above
             return next.handle(request);

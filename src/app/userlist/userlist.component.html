@@ -1,167 +1,172 @@
+<div class="bg_grey VH100 ">
+  <div class="fg_color container ">
+		<div class="row bg_color">
+		    <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap" style="width: 1260px;">
+		      <app-header></app-header>
+		    </div>
+		</div>
 
-<div class="row bg_color">
-    <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap" style="width: 1260px;">
-      <app-header></app-header>
-    </div>
-	</div>
-
-<div class="MT20" *ngIf="deleteMsg">
-  <div class="alert alert-danger fade in">
-     <span class="close" (click)="closeErrorAlert()">x</span> 
-      {{ alertMessage }}
-  </div>
-</div> 
-
-
-<!-- <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-  <a [routerLink]="['/home']">Back</a>
-</li> -->
+		<div class="MT20" *ngIf="deleteMsg">
+		  <div class="alert alert-danger fade in">
+		     <span class="close" (click)="closeErrorAlert()">x</span> 
+		      {{ alertMessage }}
+		  </div>
+		</div> 
 
 
-<div class = "row" >
- 	<div class="col-xs-12 table-responsive"  style="text-align:center;">
-	  <table class="table container-white custom_tbl">
-	  	<thead>
-	  	  <tr class="t_header">
-	  	    <th class="ft_dark width24">Firstname</th>
-	  	    <th class="ft_dark width24">LastName</th>
-	  	    <th class="ft_dark">Username</th>
-	  	    <th class="ft_dark">Email</th>
-	  	    <th class="ft_dark">sex</th>
-	  	    <th class="ft_dark">DOB</th>
-	  	    <th class="ft_dark">phone_number</th>
-	  	    <th></th>
-	  	    <th></th>
-	  	  </tr>
-	  	</thead>
-	  	<tbody>
-	  		<tr *ngFor="let user of users">
-	  			<td class = "P16">{{user.firstName}}</td>
-	  			<td class = "P16">{{user.lastName}}</td>
-	  			<td class = "P16">{{user.username}}</td>
-	  			<td class = "P16">{{user.email}}</td>
-	  			<td class = "P16">{{user.sex}}</td>
-	  			<td class = "P16">{{user.date_of_birth}}</td>
-	  			<td class = "P16">{{user.phone_number}}</td>
-
-	  			<td>
-	  			  <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="deleteUser(user,currentUser)">Delete</button>
-	  			</td>
-	  			<td>
-	  				 <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="openModal(user)">Update
-	          </button> 
-	  
-
-	        <!--   <li> [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-  				<a [routerLink]="['/register']">update</a></li> -->
-	        </td>
-	  		</tr>
-	  	</tbody>
-		</table>
-	</div>
-</div>
+		<!-- <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+		  <a [routerLink]="['/home']">Back</a>
+		</li> -->
 
 
-<div bsModal #updateModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg update-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Registration Information</h4>
-         <div class="MT20">
-         	<span class="close" (click)="onCloseHandled()">x</span>
-      	 </div>
-      </div>
-      <div class="modal-body bg_grey_overlay P30" style="min-height: 45vh;">
-		    <form name="form" (ngSubmit)="f.form.valid " #f="ngForm" novalidate>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
-		            <label for="firstName">First Name</label>
-		            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName"  #firstName="ngModel" required />
+		<div class = "row" >
+		 	<div class="col-xs-12 table-responsive"  style="text-align:center;">
+			  <table class="table container-white custom_tbl">
+			  	<thead>
+			  	  <tr class="t_header">
+			  	    <th class="ft_dark width24">Firstname</th>
+			  	    <th class="ft_dark width24">LastName</th>
+			  	    <th class="ft_dark">Username</th>
+			  	    <th class="ft_dark">Email</th>
+			  	    <th class="ft_dark">sex</th>
+			  	    <th class="ft_dark">DOB</th>
+			  	    <th class="ft_dark">phone_number</th>
+			  	    <th></th>
+			  	    <th></th>
+			  	  </tr>
+			  	</thead>
+			  	<tbody>
+			  		<tr *ngFor="let user of users">
+			  			<td class = "P16">{{user.firstName}}</td>
+			  			<td class = "P16">{{user.lastName}}</td>
+			  			<td class = "P16">{{user.username}}</td>
+			  			<td class = "P16">{{user.email}}</td>
+			  			<td class = "P16">{{user.sex}}</td>
+			  			<td class = "P16">{{user.date_of_birth}}</td>
+			  			<td class = "P16">{{user.phone_number}}</td>
+
+			  			<td>
+			  			  <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="deleteUser(user,currentUser)">Delete</button>
+			  			</td>
+			  			<td>
+			  				 <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="openModal(user)">Update
+			          </button> 
+			  
+
+			        <!--   <li> [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+		  				<a [routerLink]="['/register']">update</a></li> -->
+			        </td>
+			  		</tr>
+			  	</tbody>
+				</table>
+			</div>
+		</div>
+
+
+		<div bsModal #updateModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		  aria-hidden="true">
+		  <div class="modal-dialog modal-lg update-modal">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">Registration Information</h4>
+		         <div class="MT20">
+		         	<span class="close" (click)="onCloseHandled()">x</span>
+		      	 </div>
+		      </div>
+		      <div class="modal-body bg_grey_overlay P30" style="min-height: 45vh;">
+				    <form name="form" (ngSubmit)="f.form.valid " #f="ngForm" novalidate>
+				        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+				            <label for="firstName">First Name</label>
+				            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName"  #firstName="ngModel" required />
+				            <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
+				        </div>
+				        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+				            <label for="lastName">Last Name</label>
+				            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
+				            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
+				        </div>
+				        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !sex.valid }">
+				            <label for="sex">Sex</label>
+				            <!-- <input type="radio" class="form-control" name="male" value="M" [(ngModel)]="model.sex" #sex="ngModel" required /> -->
+				            <label class="radio-inline">
+				            <input style="margin-top:4px;" type="radio" name="male" value="M" [(ngModel)]="model.sex" (click)="model.sex='M'">Male
+				              </label>
+				            <label class="radio-inline">
+				            <input style="margin-top:4px;" type="radio" name="male" value="F" [(ngModel)]="model.sex" (click)= "model.sex='F'">Female
+				              </label>
+				            <div *ngIf="f.submitted && !sex.valid" class="help-block">*Please select sex</div>
+				        </div>
+				        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !date_of_birth.valid }">
+				            <label for="dob">DOB</label>
+				            <input type="text" class="form-control" name="dob" [(ngModel)]="model.date_of_birth" placeholder="DD/MM/YY" #dob="ngModel" required />
+				            <!-- <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> -->
+				            <div *ngIf="dob.errors && f.submitted" class="error">
+				                DOB is required!
+				              </div>
+				        </div>
+				        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone_number.valid }">
+				            <label for="phone_number">Phone number</label>
+				            <input [textMask]="{mask: mask}" type="text"  class="form-control" name="phone_number" [(ngModel)]="model.phone_number" placeholder="Mobile Number" #phone_number="ngModel" (ngModelChange)="validatePhoneNumberLength($event)" required />
+				            <!-- <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> -->
+				            <div *ngIf="phone_number.errors && (phone_number.dirty || phone_number.touched || submitted)" class="error">
+				              <div [hidden]="!phone_number.errors.required">
+				                Phone Number is required!
+				              </div>
+				            </div>
+				            <div *ngIf="showPhoneWar" class="error">
+				              <p>Please enter 10 digits<p>
+				            </div>
+				        </div>
+				        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+				            <label for="email">Email</label>
+				            <input type="email" class="form-control" name="email" [(ngModel)]="model.email"  #email="ngModel" required />
+				            <div *ngIf="f.submitted && !email.valid" class="help-block"  >email is required</div>
+				        </div>
+				        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+				            <label for="username">Username</label>
+				            <input type="text" class="form-control" name="username" [(ngModel)]="model.username"  #username="ngModel" required />
+				            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+				        </div>
+				    	</form>
+
+		      </div>
+		      
+		      <div class="modal-footer" style="text-align: justify;">
+		        <button type="button"  class="btn btn-primary" (click) = "updateUser(model)">Update</button>
+		        <button type="button" class="btn btn-default c-btn" style="width:15%" (click)="onCloseHandled()">Close</button>
+		      </div>
+		  	</div>
+		  </div>
+		 </div>
+		<!-- <modal id="userEdit">
+		    <div class="modal">
+		        <div class="modal-body">
+		            <h1>A Custom Modal!</h1>
+		            <p
+
+		            >
+		                Home page text: <input type="text" [(ngModel)]="bodyText" />
+		            </p>
+		            <button (click)="closeModal('userEdir');">Close</button>
+		        </div>
+		    </div>
+		    <div class="modal-background"></div>
+		</modal> -->
+
+
+
+
+
+			
+		<!-- <app-dialog [(visible)]="showDialog">
+		  <h1>Registration</h1>
+		  <div class= "row">
+		  	<label for="firstName">First Name</label>
+		  	<input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
 		            <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
-		            <label for="lastName">Last Name</label>
-		            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
-		            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !sex.valid }">
-		            <label for="sex">Sex</label>
-		            <!-- <input type="radio" class="form-control" name="male" value="M" [(ngModel)]="model.sex" #sex="ngModel" required /> -->
-		            <label class="radio-inline">
-		            <input style="margin-top:4px;" type="radio" name="male" value="M" [(ngModel)]="model.sex" (click)="model.sex='M'">Male
-		              </label>
-		            <label class="radio-inline">
-		            <input style="margin-top:4px;" type="radio" name="male" value="F" [(ngModel)]="model.sex" (click)= "model.sex='F'">Female
-		              </label>
-		            <div *ngIf="f.submitted && !sex.valid" class="help-block">*Please select sex</div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !date_of_birth.valid }">
-		            <label for="dob">DOB</label>
-		            <input type="text" class="form-control" name="dob" [(ngModel)]="model.date_of_birth" placeholder="DD/MM/YY" #dob="ngModel" required />
-		            <!-- <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> -->
-		            <div *ngIf="dob.errors && f.submitted" class="error">
-		                DOB is required!
-		              </div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone_number.valid }">
-		            <label for="phone_number">Phone number</label>
-		            <input [textMask]="{mask: mask}" type="text"  class="form-control" name="phone_number" [(ngModel)]="model.phone_number" placeholder="Mobile Number" #phone_number="ngModel" (ngModelChange)="validatePhoneNumberLength($event)" required />
-		            <!-- <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> -->
-		            <div *ngIf="phone_number.errors && (phone_number.dirty || phone_number.touched || submitted)" class="error">
-		              <div [hidden]="!phone_number.errors.required">
-		                Phone Number is required!
-		              </div>
-		            </div>
-		            <div *ngIf="showPhoneWar" class="error">
-		              <p>Please enter 10 digits<p>
-		            </div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-		            <label for="email">Email</label>
-		            <input type="email" class="form-control" name="email" [(ngModel)]="model.email"  #email="ngModel" required />
-		            <div *ngIf="f.submitted && !email.valid" class="help-block"  >email is required</div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-		            <label for="username">Username</label>
-		            <input type="text" class="form-control" name="username" [(ngModel)]="model.username"  #username="ngModel" required />
-		            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
-		        </div>
-		    	</form>
+		  </div>
 
-      </div>
-      
-      <div class="modal-footer" style="text-align: justify;">
-        <button type="button"  class="btn btn-primary" (click) = "updateUser(model)">Update</button>
-        <button type="button" class="btn btn-default c-btn" style="width:15%" (click)="onCloseHandled()">Close</button>
-      </div>
-  	</div>
-  </div>
+		  <button (click)="showDialog = !showDialog" class="btn">Close</button>
+		</app-dialog> -->
  </div>
-<!-- <modal id="userEdit">
-    <div class="modal">
-        <div class="modal-body">
-            <h1>A Custom Modal!</h1>
-            <p>
-                Home page text: <input type="text" [(ngModel)]="bodyText" />
-            </p>
-            <button (click)="closeModal('userEdir');">Close</button>
-        </div>
-    </div>
-    <div class="modal-background"></div>
-</modal> -->
-
-
-
-
-
-	
-<!-- <app-dialog [(visible)]="showDialog">
-  <h1>Registration</h1>
-  <div class= "row">
-  	<label for="firstName">First Name</label>
-  	<input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
-            <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
-  </div>
-
-  <button (click)="showDialog = !showDialog" class="btn">Close</button>
-</app-dialog> -->
+</div>

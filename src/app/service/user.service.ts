@@ -36,4 +36,9 @@ export class UserService {
       // .map((response: Response) => { return response;}).catch((error:any) => Observable.throw(error.json()));
     }
 
+    resetPassword(model){
+      return this.http.put('/api/users', model)
+
+    }
+
 }

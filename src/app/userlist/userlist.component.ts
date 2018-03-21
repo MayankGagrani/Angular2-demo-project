@@ -8,7 +8,6 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DialogService } from "ng2-bootstrap-modal";
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { HttpModule } from '@angular/http';
-import { SharedService} from '../service/shared.service';
 import { ModalConfirmComponent} from '../modal-confirm/modal-confirm.component';
 import { DeleteModalComponent} from '../delete-modal/delete-modal.component';
  
@@ -26,7 +25,6 @@ import { DeleteModalComponent} from '../delete-modal/delete-modal.component';
    phone_number: string;
    sex: string;
    date_of_birth: string;
-
  }
 
 @Component({
@@ -38,7 +36,7 @@ import { DeleteModalComponent} from '../delete-modal/delete-modal.component';
 export class UserlistComponent implements OnInit {
 
    public model:Model;
-	  currentUser: User;
+	  currentUser: User[];
     users: User[] = [];
     //user: any = {};
     //model:any= {};
@@ -49,7 +47,7 @@ export class UserlistComponent implements OnInit {
     public mask = [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]   
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
-  constructor( private router: Router, private userService: UserService, private modalService: BsModalService, private dialogService: DialogService,private sharedService : SharedService ) { 
+  constructor( private router: Router, private userService: UserService, private modalService: BsModalService, private dialogService: DialogService) { 
   	this.users = JSON.parse(localStorage.getItem('users'));
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.model = new Model();
@@ -91,9 +89,9 @@ export class UserlistComponent implements OnInit {
     .subscribe((isConfirmed)=> {
      if(isConfirmed){  
         this.userService.delete(user.id,currentUser)
-          .subscribe(response => {
+          .subscribe((response :any) => {
             this.showConfirm(user);
-            this.router.navigate(['home']);
+            this.users = response;
           },(err) => {
                 this.deleteMsg = true;
                 this.alertMessage = err.split(",");
@@ -108,9 +106,9 @@ export class UserlistComponent implements OnInit {
       "model" : this.model
     };
     this.userService.update(model)
-      .subscribe(response => {
+      .subscribe((response:any) => {
           this.updateModal.hide();
-          this.router.navigate (['home']);
+          this.users = response;
       });
      }  
 

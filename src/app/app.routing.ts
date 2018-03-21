@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BooksComponent } from './books/books.component';
+import { ViewOrderComponent } from './view-order/view-order.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 const indexRoutes: Routes = [
@@ -25,6 +27,8 @@ const indexRoutes: Routes = [
    { path: 'user',component:UserlistComponent, pathMatch: 'full', canActivate: [] },
 
    { path: 'book',component:BooksComponent, pathMatch: 'full', canActivate: [] },
+
+   { path: 'resetpassword',component:ResetPasswordComponent, pathMatch: 'full', canActivate: [] },
   // { path: PHMT.ROUTERLINKS.NOACCESS, component: PageNotAuthorizedComponent, pathMatch: 'full', canActivate: []  },
    { path: '**', redirectTo: ''  }
   

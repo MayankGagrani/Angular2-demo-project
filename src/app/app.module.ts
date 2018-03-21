@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { ModalModule } from 'ngx-bootstrap';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
-//import { BsModalModule } from 'ng2-bs3-modal';
 import { RouterModule, Routes } from '@angular/router';
 import { routing }        from './app.routing';
 import { HttpModule } from '@angular/http';
@@ -17,17 +16,20 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserService} from './service/user.service';
 import { AuthenticationService} from './service/authentication.service';
-import { SharedService} from './service/shared.service';
+import { BookService} from './service/book.service';
 import { AlertService } from './service/alert.service';
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { HomeComponent } from './home/home.component';
 import { UserlistComponent } from './userlist/userlist.component';  
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BooksComponent } from './books/books.component';
+import { SearchFilterPipe } from './pipe/search-filter.pipe';
+import { BsDropdownModule } from 'ngx-bootstrap';
+import { ViewOrderComponent } from './view-order/view-order.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 //import { MoviesService} from './movies.service'
 
 
@@ -44,7 +46,10 @@ import { BooksComponent } from './books/books.component';
     ModalConfirmComponent,
     DeleteModalComponent,
     UserProfileComponent,
-    BooksComponent
+    BooksComponent,
+    SearchFilterPipe,
+    ViewOrderComponent,
+    ResetPasswordComponent
     
   ],
   imports: [
@@ -55,14 +60,13 @@ import { BooksComponent } from './books/books.component';
     FormsModule,
     routing,
     TextMaskModule,
-    //BrowserAnimationsModule,
-    //BsModalModule,
+    BsDropdownModule.forRoot(),
    BootstrapModalModule.forRoot({container:document.body}),
     ModalModule.forRoot()
   ],
-  providers: [AuthenticationService,UserService,AlertService,fakeBackendProvider,SharedService],
+  providers: [AuthenticationService,UserService,AlertService,fakeBackendProvider,BookService],
   entryComponents: [ModalConfirmComponent,DeleteModalComponent],
-  //exports: [ModalConfirmComponent],
+  exports: [SearchFilterPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

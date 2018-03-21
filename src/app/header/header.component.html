@@ -11,22 +11,36 @@
   <a [routerLink]="['/register']">Register</a>
 </li> -->
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <div class="row bg_color">
-  <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap ">
-    <nav class="navbar navbar-default topHeader" >
-      <div class="container-fluid" style = "background-color: #17c9ff">
+  <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap" style ="width:1260px; margin-top: -9px;">
+    <nav class="navbar navbar-default topHeader"  >
+      <div class="container-fluid" style = "background-color: #58D6CE; margin-left: -33px; margin-right: -32px;" >
       	<div class="navbar-header" style = "margin-top:6px;" >
       		<p>You're logged in with Angular 2!!</p>
       	</div>
 	      	<ul class="nav navbar-nav navbar-right">
-	          <li class="dropdown">
-	            <a href="#" class="dropdown-toggle P15" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+	      		<div class="btn-group" style ="right:24px; top: 14px; "dropdown>
+	      		  <li dropdownToggle type="button" >
+	      		    {{currentUser.firstName}} {{currentUser.lastName}} <span class="caret"></span>
+	      		  </li>
+	      		  <ul *dropdownMenu class="dropdown-menu" role="menu">
+	      		    <!-- <div (click) = "resetPassword()"> -->
+	      		    <li role="menuitem"><a class="dropdown-item" href = "/resetpassword">Reset Password</a></li>
+	      		<!-- </div> -->
+	      		    <!-- <li role="menuitem"><a class="dropdown-item" href="#"></a></li> -->
+	      		    <li class="divider dropdown-divider"></li>
+	      		    <li role="menuitem"><a class="dropdown-item" href="/login">Logout</a>
+	      		    </li>
+	      		  </ul>
+	      		</div>
+	      	</ul>
+	          <!-- <li class="btn-group" dropdown>
+	            <a class="dropdown-toggle P15" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 	              {{currentUser.firstName}} {{currentUser.lastName}}
 	              <span class="caret"></span>
-	            </a> 
-	            <ul class="dropdown-menu">
-	              <li>
+	            </a>  -->
+	            <!-- <ul class="dropdown-menu" role= "menu">
+	              <li role="menuitem">
 	                <div style="display: table;">
 	                  <div class="profile-square-box">{{currentUser.firstName[0]}}
 	                  </div>
@@ -46,11 +60,11 @@
 	                  <i style="font-size: 16px;" class="fa fa-sign-out"></i>Sign Out
 	                </div>
 	              </li>
-	            </ul>
-	          </li>
+	            </ul> -->
+	          <!-- </li>
 	        </ul>
-
-	        <ul class="nav navbar-nav navbar-right" >
+ -->
+	    <ul class="nav navbar-nav navbar-right" style = "margin-right: 25px;" >
           <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
             <a [routerLink]="['/home']">Home</a>
           </li>

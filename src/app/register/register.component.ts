@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {UserService} from '../service/user.service';
 import { AlertService } from '../service/alert.service';
-import { SharedService} from '../service/shared.service';
+
 
 export interface registerModel{
   model: Model;
@@ -12,6 +12,7 @@ export class Model{
   lastName: string;
   email: string;
   username: string;
+  password: string;
 }
 
 @Component({
@@ -28,16 +29,16 @@ export class RegisterComponent implements OnInit {
   public loading = false;
   public showPhoneWar:boolean = false; 
   pwdPattern = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{6,12}$";
-  //users: any= {};
   public mask = [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
   
 
-  constructor(private router: Router, private userService: UserService, private alertService: AlertService, private sharedService : SharedService) { 
+  constructor(private router: Router, private userService: UserService, private alertService: AlertService) { 
     this.model = new Model();
     this.model.firstName = '';
     this.model.lastName = '';
     this.model.email = '';
     this.model.username = '';
+    this.model.password  = '';
   }
     //model:any;
   ngOnInit() {

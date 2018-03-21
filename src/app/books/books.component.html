@@ -7,9 +7,20 @@
 
 		    <div class="row bg_grey_overlay ">
 		      <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap">
-		        <div style="min-height: 80vh">
+		        <div style="min-height: 10vh">
 		          <div class="row MB20">
-		          	<div class="col-lg-offset-6 col-lg-2 col-xs-5 MT20">
+		          	 <div class="col-lg-4 col-xs-7 MT20">
+		          	  <div class="input-group" style="width:100%;">
+		          	    <input [(ngModel)]="searchInput" ngui-auto-complete placeholder="Search By Book Title"
+		          	      class="form-control s-field field_color" >
+		          	    <div class="input-group-btn">
+		          	      <button class="btn btn-primary btn-blue c-btn search_btn" type="submit" >
+		          	            <span class="glyphicon glyphicon-search"></span>
+		          	          </button>
+		          	    </div>
+		          	  </div>
+		          	</div>
+ 		          	<div class="col-lg-offset-6 col-lg-2 col-xs-5 MT20" style="padding-left: 543px; margin-top: -26px;">
 		          	  <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button" (click)="createBookDialogue()"> Add Book
 		          	  </button>
 		          	</div>
@@ -17,7 +28,72 @@
 		         </div>
 		      </div>
 		    </div>
+
+		    <div class = "row" >
+		     	<div class="col-xs-12 table-responsive">
+		    	  <table class="table container-white custom_tbl">
+		    	  	<thead>
+		    	  	  <tr class="t_header">
+		    	  	    <th class="ft_dark width24">BookID</th>
+		    	  	    <th class="ft_dark width24">Book Title</th>
+		    	  	    <th class="ft_dark width24">Book Category</th>
+		    	  	    <th class="ft_dark">Author Name</th>
+		    	  	    <th class="ft_dark">Price</th>
+		    	  	    <th class="ft_dark">Quantity</th>
+		    	  	   <!--  <th class="ft_dark">DOB</th>
+		    	  	    <th class="ft_dark">phone_number</th> -->
+		    		    <th></th>
+		    	  	    <th></th>
+		    	  	  </tr>
+		    	  	</thead>
+		    	  	<tbody>
+		    	  		<tr *ngFor="let book of books | SearchFilterPipe: searchInput">
+		    	  			<td class = "P16">{{book.bookId}}</td>
+		    	  			<td class = "P16">
+		    	  				<span class="ft_clour surveyTitle " >
+		    	  					{{book.bookTitle}}
+		    	  				</span>
+		    	  				</td>
+		    	  			<td class = "P16">{{book.topic}}</td>
+		    	  			<td class = "P16">{{book.author}}</td>
+		    	  			<td class = "P16">{{book.cost}}</td>
+		    	  			<td class = "P16">{{book.quantity}}</td>
+		    	  			<!-- <td class = "P16">{{user.sex}}</td>
+		    	  			<td class = "P16">{{user.date_of_birth}}</td>
+		    	  			<td class = "P16">{{user.phone_number}}</td>
+ -->
+		    	  			<td>
+		    	  			  <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="deleteBook(book)">Delete</button>
+		    	  			</td>
+		    	  			<td>
+		    	  				 <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="openBookModal(book)">Update
+		    	          </button> 
+		    	  
+
+		    	        <!--   <li> [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+		      				<a [routerLink]="['/register']">update</a></li> -->
+		    	        </td>
+		    	  		</tr>
+		    	  	</tbody>
+		    		</table>
+		    	</div>
+		    </div>
 		</div>
+		<!-- <table>
+		    <tr *ngFor="let book of books | SearchFilterPipe: searchInput">
+		      <td>
+		        <div>
+		          <ul>
+		            <li><label>Book ID:</label>&nbsp;{{book.bookId}}</li>
+		            <li><label>Title:</label>&nbsp;{{book.bookTitle}}</li>
+		            <li><label>Topic:</label>&nbsp;{{book.topic}}</li>
+		            <li><label>Author:</label>&nbsp;{{book.author}}</li>
+		            <li><label>Cost:</label>&nbsp;{{book.cost}}</li>
+		          </ul>
+		        </div>
+		      </td>
+		    </tr>
+		  </table> -->
 	</div>
 </div>
 
@@ -28,71 +104,53 @@
   <div class="modal-dialog modal-lg update-modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Registration Information</h4>
+        <h4 class="modal-title">Create Book</h4>
          <div class="MT20">
          	<span class="close" (click)="onCloseHandled()">x</span>
       	 </div>
+      	 <div class="MT20" *ngIf="bookError">
+      	   <div class="alert alert-danger fade in">
+      	      <span class="close" (click)="closeErrorAlert()">x</span> 
+      	       {{ BookErrorMessage }}
+      	   </div>
+      	 </div> 
       </div>
-      <!-- <div class="modal-body bg_grey_overlay P30" style="min-height: 45vh;">
+      <div class="modal-body bg_grey_overlay P30" style="min-height: 45vh;">
 		    <form name="form" (ngSubmit)="f.form.valid " #f="ngForm" novalidate>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
-		            <label for="firstName">First Name</label>
-		            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName"  #firstName="ngModel" required />
-		            <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !bookTitle.valid }">
+		            <label for="firstName">Book Title</label>
+		            <input type="text" class="form-control" name="bookTitle" [(ngModel)]="book.bookTitle"  #bookTitle="ngModel" placeholder = "Book Title" required />
+		            <div *ngIf="f.submitted && !bookTitle.valid" class="help-block">Book Title is required</div>
 		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
-		            <label for="lastName">Last Name</label>
-		            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
-		            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !topic.valid }">
+		            <label for="lastName">Book Topic</label>
+		            <input type="text" class="form-control" name="topic" [(ngModel)]="book.topic" #topic="ngModel" placeholder = "Book Topic" required />
+		            <div *ngIf="f.submitted && !topic.valid" class="help-block">Book Topic is required</div>
 		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !sex.valid }">
-		            <label for="sex">Sex</label>
-		            <!-- <input type="radio" class="form-control" name="male" value="M" [(ngModel)]="model.sex" #sex="ngModel" required /> -->
-		            <!-- <label class="radio-inline">
-		            <input style="margin-top:4px;" type="radio" name="male" value="M" [(ngModel)]="model.sex" (click)="model.sex='M'">Male
-		              </label>
-		            <label class="radio-inline">
-		            <input style="margin-top:4px;" type="radio" name="male" value="F" [(ngModel)]="model.sex" (click)= "model.sex='F'">Female
-		              </label>
-		            <div *ngIf="f.submitted && !sex.valid" class="help-block">*Please select sex</div>
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !author.valid }">
+		            <label for="dob">Author Name</label>
+		            <input type="text" class="form-control" name="author" [(ngModel)]="book.author" placeholder="Author Name" #author="ngModel" required />
+		            <div *ngIf="f.submitted && !author.valid" class="help-block">*Book Author is required </div> 
 		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !date_of_birth.valid }">
-		            <label for="dob">DOB</label>
-		            <input type="text" class="form-control" name="dob" [(ngModel)]="model.date_of_birth" placeholder="DD/MM/YY" #dob="ngModel" required />
-		            <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> 
-		            <div *ngIf="dob.errors && f.submitted" class="error">
-		                DOB is required!
-		              </div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone_number.valid }">
-		            <label for="phone_number">Phone number</label>
-		            <input [textMask]="{mask: mask}" type="text"  class="form-control" name="phone_number" [(ngModel)]="model.phone_number" placeholder="Mobile Number" #phone_number="ngModel" (ngModelChange)="validatePhoneNumberLength($event)" required />
-		             <div *ngIf="f.submitted && !phone_number.valid" class="help-block">*Phone number is required </div> 
-		            <div *ngIf="phone_number.errors && (phone_number.dirty || phone_number.touched || submitted)" class="error">
-		              <div [hidden]="!phone_number.errors.required">
-		                Phone Number is required!
-		              </div>
-		            </div>
-		            <div *ngIf="showPhoneWar" class="error">
-		              <p>Please enter 10 digits<p>
-		            </div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-		            <label for="email">Email</label>
-		            <input type="email" class="form-control" name="email" [(ngModel)]="model.email"  #email="ngModel" required />
-		            <div *ngIf="f.submitted && !email.valid" class="help-block"  >email is required</div>
-		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-		            <label for="username">Username</label>
-		            <input type="text" class="form-control" name="username" [(ngModel)]="model.username"  #username="ngModel" required />
-		            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
-		        </div>
-		    	</form>
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cost.valid }">
+		            <label for="cost">Book Cost</label>
+		            <input  type="text"  class="form-control" name="cost" [(ngModel)]="book.cost" placeholder="Book cost" #cost="ngModel" required [pattern] = "numberpattern"  />
+		             <div *ngIf="f.submitted && !cost.valid" class="help-block">*Book cost is required </div>
+		             <div *ngIf = "f.submitted && !cost.hasError('pattern')"> Only numbers allowed
+		             </div> 
+		         </div>
 
-      </div> --> 
+		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !quantity.valid }">
+		            <label for="quantity">Quantity</label>
+		            <input  type="number"  class="form-control" name="quantity" [(ngModel)]="book.quantity"  #quantity="ngModel" required  min ="0"/>
+		             <div *ngIf="f.submitted && !cost.valid" class="help-block">*Book cost is required </div>
+		         </div>
+		    </form>
+
+      </div> 
       
       <div class="modal-footer" style="text-align: justify;">
-        <button type="button"  class="btn btn-primary" (click) = "updateUser(model)">Update</button>
+        <button type="button"  class="btn btn-primary" (click) = "submitBook()">Save</button>
         <button type="button" class="btn btn-default c-btn" style="width:15%" (click)="onCloseHandled()">Close</button>
       </div>
   	</div>
