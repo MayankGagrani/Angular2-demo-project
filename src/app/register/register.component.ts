@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {UserService} from '../service/user.service';
 import { AlertService } from '../service/alert.service';
+import { FormControl, FormGroup, Validators, PatternValidator, NgForm } from '@angular/forms';
 
 
 export interface registerModel{
@@ -13,6 +14,10 @@ export class Model{
   email: string;
   username: string;
   password: string;
+  sex : boolean;
+  date_of_birth:string;
+  phone_number: number;
+  role: string;
 }
 
 @Component({
@@ -39,14 +44,20 @@ export class RegisterComponent implements OnInit {
     this.model.email = '';
     this.model.username = '';
     this.model.password  = '';
+    this.model.sex = null;
+    this.model.date_of_birth = '';
+    this.model.phone_number = null;
+    this.model.role = 'admin';
   }
-    //model:any;
   ngOnInit() {
     // this.msg = "Registration successful";
 
   }
 
-  public register() {
+  public register(form:NgForm) {
+    if (!form.valid) {
+      return;
+    }
     // this.loading = true;
     let obj = {
       "model" : this.model

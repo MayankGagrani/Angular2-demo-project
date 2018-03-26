@@ -1,3 +1,33 @@
-<p>
-  view-order works!
-</p>
+<div class="bg_grey VH100 ">
+  <div class="fg_color container ">
+		<div class="row bg_color">
+		    <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap" style ="width:1260px; ">
+		      <app-header></app-header>
+		    </div>
+		  </div>
+		    <table>
+		      <td>
+		        <div>
+		          <ul>
+		            <li><label>Book ID:</label>&nbsp;{{this.data.bookId}}</li>
+		            <li><label>Title:</label>&nbsp;{{this.data.bookTitle}}</li>
+		            <li><label>Topic:</label>&nbsp;{{this.data.topic}}</li>
+		            <li><label>Author:</label>&nbsp;{{this.data.author}}</li>
+		            <li><label>Cost:</label>&nbsp;{{this.data.cost}}</li>
+		            <li><label>Quantity:</label>&nbsp;{{this.data.quantity}}</li>
+		            <br>
+		            <br>
+		            <li><label>UserId:</label>&nbsp;{{this.currentUser.id}}</li>
+		            <li><label>UserName:</label>&nbsp;{{this.currentUser.firstName}} {{this.currentUser.lastName}}</li>
+		            <br>
+		            <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button" (click) = "issueBook(this.data)">Issue
+		    	       </button>
+		    	       <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button" (click) = "returnBook(this.data)">Return
+		    	       </button>
+
+		          </ul>
+		        </div>
+		      </td>
+		  		  </table>
+	</div>
+</div>

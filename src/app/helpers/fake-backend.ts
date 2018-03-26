@@ -23,6 +23,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     {
         // array in local storage for registered users
         let users: any[] = JSON.parse(localStorage.getItem('users')) || [];
+        
         let books: any[] = JSON.parse(localStorage.getItem('books')) || []; 
         // wrap in delayed observable to simulate server api call
         return Observable.of(null).mergeMap(() => {
@@ -83,11 +84,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
 
             // create user
+            
             if (request.url.endsWith('/api/users') && request.method === 'POST') {
                 // get new user object from post body
                 let newUser = request.body.model;
-
-                // validation
+                                // validation
                 let duplicateUser = users.filter(user => { return user.username === newUser.username; }).length;
                 if (duplicateUser) {
                     return Observable.throw('Username "' + newUser.username + '" is already taken');
@@ -160,7 +161,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
             //UPDATE book
             if (request.url.match(/\/api\/books\/\d+$/) && request.method === 'PUT') {
-            //     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
                 let updateBook = request.body;
                 for(let j = 0; j < books.length; j++)
                 {
@@ -174,9 +174,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         break;
                     }  
                 }
-                // users.push(updateUser);
-                // localStorage.setItem('users', JSON.stringify(users));
-                // return users;
                 // respond 200 OK
                 return Observable.of(new HttpResponse({ status: 200 , body: books}));
             }
@@ -219,6 +216,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             // delete user
             if (request.url.match(/\/api\/users\/\d+$/) && request.method === 'DELETE') {
+                    
                     // find user by id in users array
                     let urlParts = request.url.split('/');
                     let id = parseInt(urlParts[urlParts.length - 1]);
@@ -245,6 +243,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }       
                 //delete book
                 if (request.url.match(/\/api\/books\/\d+$/) && request.method === 'DELETE') {
+                        
+                        
                         // find book by id in books array
                         let urlParts = request.url.split('/');
                         let id = parseInt(urlParts[urlParts.length - 1]);

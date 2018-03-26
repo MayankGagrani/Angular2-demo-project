@@ -29,6 +29,8 @@ const indexRoutes: Routes = [
    { path: 'book',component:BooksComponent, pathMatch: 'full', canActivate: [] },
 
    { path: 'resetpassword',component:ResetPasswordComponent, pathMatch: 'full', canActivate: [] },
+
+   { path: 'vieworder',component:ViewOrderComponent, pathMatch: 'full', canActivate: [] },
   // { path: PHMT.ROUTERLINKS.NOACCESS, component: PageNotAuthorizedComponent, pathMatch: 'full', canActivate: []  },
    { path: '**', redirectTo: ''  }
   

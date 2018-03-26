@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserService} from './service/user.service';
+import { SharedService} from './service/shared.service';
 import { AuthenticationService} from './service/authentication.service';
 import { BookService} from './service/book.service';
 import { AlertService } from './service/alert.service';
@@ -30,6 +31,8 @@ import { SearchFilterPipe } from './pipe/search-filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SearchFilterTwoPipe } from './pipe/search-filter-two.pipe';
+import { SortByPipe } from './pipe/sort-by.pipe';
 //import { MoviesService} from './movies.service'
 
 
@@ -49,7 +52,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     BooksComponent,
     SearchFilterPipe,
     ViewOrderComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SearchFilterTwoPipe,
+    SortByPipe
     
   ],
   imports: [
@@ -64,9 +69,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
    BootstrapModalModule.forRoot({container:document.body}),
     ModalModule.forRoot()
   ],
-  providers: [AuthenticationService,UserService,AlertService,fakeBackendProvider,BookService],
+  providers: [AuthenticationService,UserService,AlertService,fakeBackendProvider,BookService, SharedService],
   entryComponents: [ModalConfirmComponent,DeleteModalComponent],
-  exports: [SearchFilterPipe],
+  exports: [SearchFilterPipe,SearchFilterTwoPipe,SortByPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

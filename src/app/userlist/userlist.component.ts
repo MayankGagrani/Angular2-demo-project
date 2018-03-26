@@ -92,7 +92,6 @@ export class UserlistComponent implements OnInit {
      if(isConfirmed){  
         this.userService.delete(user.id,currentUser)
           .subscribe((response :any) => {
-            debugger
             this.showConfirm(user);
             this.users = response;
           },(err) => {

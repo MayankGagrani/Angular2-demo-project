@@ -5,7 +5,9 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DialogService } from "ng2-bootstrap-modal";
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BookService} from '../service/book.service';
+import { SharedService} from '../service/shared.service';
 import { ModalConfirmComponent} from '../modal-confirm/modal-confirm.component';
+import { FormControl, FormGroup, Validators, PatternValidator, NgForm } from '@angular/forms';
 //import { SearchFilterPipe } from '../pipe/search-filter.pipe';
 
 
@@ -24,6 +26,7 @@ export class Book{
 }
 
 @Pipe({ name: 'SearchFilterPipe'})
+@Pipe({ name: 'SortByPipe'})
 
 @Component({
   selector: 'app-books',
@@ -35,21 +38,21 @@ export class BooksComponent implements OnInit {
   public book: Book;
   books: Book[]= [];
   numberpattern ="[0-9]*";
-  public searchInput:any ='';
+  //public searchInput:any ='';
   public searchQuery:any ='';
   public noResult:boolean = false;
   bookError: boolean = false;
   BookErrorMessage: string;
-  
+  private sortByKey: string;
   @ViewChild('createBookModal') public createBookModal: ModalDirective;
-  constructor(public router : Router,public dialogService: DialogService, public modalService: BsModalService , private bookService: BookService) {
+  constructor(public router : Router,public dialogService: DialogService, public modalService: BsModalService , private bookService: BookService,private sharedService: SharedService) {
     this.books = JSON.parse(localStorage.getItem('books'));
     this.book = new Book();
     this.book.bookTitle = '';
     this.book.topic = '';
     this.book.author = '';
-    // this.book.cost = '';
-    // this.book.issued = '';
+    this.book.cost = null;
+    this.book.issued = false;
 
   }
 
@@ -62,10 +65,17 @@ export class BooksComponent implements OnInit {
     this.book.author = '';
     this.book.cost = null;
     this.book.quantity = null;
+    this.book.issued = false;
   	this.createBookModal.show();
 
   }
   public submitBook()
+  
+  // if (!form.valid)
+  // {
+  //   return;
+  // }
+
   {
     let obj = {
       book : this.book 
@@ -102,7 +112,7 @@ export class BooksComponent implements OnInit {
         this.bookService.delete(book.bookId).
          subscribe((response:any) => { 
           this.books = response;
-          this.router.navigate[('/book')]   
+          // this.router.navigate[('/book')]   
       },(err)=>
       {
           console.log("Error from API")
@@ -132,7 +142,14 @@ export class BooksComponent implements OnInit {
       this.book.cost = book.cost;
       this.book.bookId = book.bookId;
       this.book.quantity = book.quantity;
+      this.book.issued = book.issued;
       this.createBookModal.show();
+  }
+
+  public viewOrder(book)
+  {
+      this.sharedService.setBooks(book);
+      this.router.navigate(['/vieworder']);
   }
 
 

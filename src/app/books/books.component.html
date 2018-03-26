@@ -4,6 +4,7 @@
 		    <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap" style ="width:1260px; ">
 		      <app-header></app-header>
 		    </div>
+		  </div>
 
 		    <div class="row bg_grey_overlay ">
 		      <div class="col-sm-12 col-lg-12 col-md-12 overlay-wrap">
@@ -20,6 +21,16 @@
 		          	    </div>
 		          	  </div>
 		          	</div>
+		          	<div class="search-div">
+		          	    <label>Sort by</label>&nbsp;
+		          	    <select [(ngModel)]="sortByKey">
+		          	      <option value="bookId">Book Id</option>
+		          	      <option value="bookTitle">Title</option>
+		          	      <option value="topic">Topic</option>
+		          	      <option value="author">Author</option>
+		          	      <option value="cost">Cost</option>
+		          	    </select>
+		          	  </div>
  		          	<div class="col-lg-offset-6 col-lg-2 col-xs-5 MT20" style="padding-left: 543px; margin-top: -26px;">
 		          	  <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button" (click)="createBookDialogue()"> Add Book
 		          	  </button>
@@ -40,6 +51,7 @@
 		    	  	    <th class="ft_dark">Author Name</th>
 		    	  	    <th class="ft_dark">Price</th>
 		    	  	    <th class="ft_dark">Quantity</th>
+		    	  	    <th class="ft_dark">Issued</th>
 		    	  	   <!--  <th class="ft_dark">DOB</th>
 		    	  	    <th class="ft_dark">phone_number</th> -->
 		    		    <th></th>
@@ -47,7 +59,7 @@
 		    	  	  </tr>
 		    	  	</thead>
 		    	  	<tbody>
-		    	  		<tr *ngFor="let book of books | SearchFilterPipe: searchInput">
+		    	  		<tr *ngFor="let book of books | SearchFilterPipe: searchInput | SortByPipe: sortByKey">
 		    	  			<td class = "P16">{{book.bookId}}</td>
 		    	  			<td class = "P16">
 		    	  				<span class="ft_clour surveyTitle " >
@@ -58,6 +70,7 @@
 		    	  			<td class = "P16">{{book.author}}</td>
 		    	  			<td class = "P16">{{book.cost}}</td>
 		    	  			<td class = "P16">{{book.quantity}}</td>
+		    	  			<td class = "P16">{{book.issued}}</td>
 		    	  			<!-- <td class = "P16">{{user.sex}}</td>
 		    	  			<td class = "P16">{{user.date_of_birth}}</td>
 		    	  			<td class = "P16">{{user.phone_number}}</td>
@@ -67,11 +80,10 @@
 		    	  			</td>
 		    	  			<td>
 		    	  				 <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button"  (click)="openBookModal(book)">Update
-		    	          </button> 
-		    	  
-
-		    	        <!--   <li> [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-		      				<a [routerLink]="['/register']">update</a></li> -->
+		    	          </button>
+		    	        </td>
+		    	        <td>
+		    	          <button class="btn btn-primary action-btn2 btn-blue pull-right" type="button" (click)="viewOrder(book)"> Order Book</button>
 		    	        </td>
 		    	  		</tr>
 		    	  	</tbody>
@@ -95,7 +107,6 @@
 		    </tr>
 		  </table> -->
 	</div>
-</div>
 
 
 
@@ -150,7 +161,7 @@
       </div> 
       
       <div class="modal-footer" style="text-align: justify;">
-        <button type="button"  class="btn btn-primary" (click) = "submitBook()">Save</button>
+        <button type="button"  class="btn btn-primary" (click) = "submitBook(f)">Save</button>
         <button type="button" class="btn btn-default c-btn" style="width:15%" (click)="onCloseHandled()">Close</button>
       </div>
   	</div>

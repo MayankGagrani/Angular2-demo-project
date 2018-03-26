@@ -25,4 +25,7 @@ export class BookService {
     return this.http.put('/api/books/' + obj.book.bookId, obj.book)
   }
 
+  issueUpdate(book){
+    return this.http.put('/api/books/' + book.bookId, book)
+  }
 }

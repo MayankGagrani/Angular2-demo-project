@@ -11,4 +11,5 @@ export class User {
     newPassword: string;
     oldPassword: string;
     confirmPassword: string;
+    role: string;
 }
