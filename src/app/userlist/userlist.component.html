@@ -20,6 +20,18 @@
 
 
 		<div class = "row" >
+			 <div class="col-lg-4 col-xs-7 MT20">
+			  <div class="input-group" style="width:100%;">
+			    <input [(ngModel)]="searchInput" ngui-auto-complete placeholder="Search By User Name"
+			      class="form-control s-field field_color" >
+			    <div class="input-group-btn">
+			      <button class="btn btn-primary btn-blue c-btn search_btn" type="submit" >
+			            <span class="glyphicon glyphicon-search"></span>
+			          </button>
+			    </div>
+			  </div>
+			</div>
+			<br>
 		 	<div class="col-xs-12 table-responsive"  style="text-align:center;">
 			  <table class="table container-white custom_tbl">
 			  	<thead>
@@ -36,7 +48,7 @@
 			  	  </tr>
 			  	</thead>
 			  	<tbody>
-			  		<tr *ngFor="let user of users">
+			  		<tr *ngFor="let user of users | SearchFilterTwoPipe: searchInput" >
 			  			<td class = "P16">{{user.firstName}}</td>
 			  			<td class = "P16">{{user.lastName}}</td>
 			  			<td class = "P16">{{user.username}}</td>

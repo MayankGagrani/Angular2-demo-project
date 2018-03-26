@@ -1,6 +1,5 @@
-// import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Component, TemplateRef, EventEmitter, Inject, Renderer, Input, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
+import { Component, TemplateRef, EventEmitter, Inject, Renderer, Input, OnInit, Output, ViewChild, ElementRef,Pipe, PipeTransform} from '@angular/core';
 import { User } from '../models/user'; 
 import { UserService } from '../service/user.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -25,7 +24,10 @@ import { DeleteModalComponent} from '../delete-modal/delete-modal.component';
    phone_number: string;
    sex: string;
    date_of_birth: string;
+   role : string;
  }
+
+ @Pipe({ name: 'SearchFilterTwoPipe'})
 
 @Component({
   selector: 'app-userlist',
@@ -38,12 +40,11 @@ export class UserlistComponent implements OnInit {
    public model:Model;
 	  currentUser: User[];
     users: User[] = [];
-    //user: any = {};
-    //model:any= {};
     public modalRef: BsModalRef;
     public showError:boolean = false;
     public deleteMsg:boolean = false; 
     public alertMessage: string;
+    //public searchInput:any ='';
     public mask = [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]   
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
@@ -61,7 +62,7 @@ export class UserlistComponent implements OnInit {
      this.model.sex = '';
      this.model.date_of_birth = '';
      this.model.phone_number = '';
-    //this.router.navigate(['/register,this.user.id']);
+     this.model.role = 'admin';
   }
 
   ngOnInit() {
@@ -77,6 +78,7 @@ export class UserlistComponent implements OnInit {
     this.model.sex = user.sex;
     this.model.date_of_birth = user.date_of_birth;
     this.model.phone_number = user.phone_number;
+    this.model.role = user.role;
     this.updateModal.show();
     }
 
@@ -90,6 +92,7 @@ export class UserlistComponent implements OnInit {
      if(isConfirmed){  
         this.userService.delete(user.id,currentUser)
           .subscribe((response :any) => {
+            debugger
             this.showConfirm(user);
             this.users = response;
           },(err) => {
