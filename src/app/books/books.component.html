@@ -127,41 +127,42 @@
       	 </div> 
       </div>
       <div class="modal-body bg_grey_overlay P30" style="min-height: 45vh;">
-		    <form name="form" (ngSubmit)="f.form.valid " #f="ngForm" novalidate>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !bookTitle.valid }">
+		    <form  #bookform="ngForm" >
+		        <div class="form-group" >
 		            <label for="firstName">Book Title</label>
 		            <input type="text" class="form-control" name="bookTitle" [(ngModel)]="book.bookTitle"  #bookTitle="ngModel" placeholder = "Book Title" required />
-		            <div *ngIf="f.submitted && !bookTitle.valid" class="help-block">Book Title is required</div>
+		            <div *ngIf="bookform.submitted && bookTitle.errors" class="error">Book Title is required</div>
 		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !topic.valid }">
+		        <div class="form-group" >
 		            <label for="lastName">Book Topic</label>
 		            <input type="text" class="form-control" name="topic" [(ngModel)]="book.topic" #topic="ngModel" placeholder = "Book Topic" required />
-		            <div *ngIf="f.submitted && !topic.valid" class="help-block">Book Topic is required</div>
+		            <div *ngIf="bookform.submitted && topic.errors" class="help-block">
+		            Book Topic is required</div>
 		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !author.valid }">
-		            <label for="dob">Author Name</label>
+		        <div class="form-group" >
+		            <label for="author">Author Name</label>
 		            <input type="text" class="form-control" name="author" [(ngModel)]="book.author" placeholder="Author Name" #author="ngModel" required />
-		            <div *ngIf="f.submitted && !author.valid" class="help-block">*Book Author is required </div> 
+		            <div *ngIf="bookform.submitted && author.errors" class="help-block">*Book Author is required </div> 
 		        </div>
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !cost.valid }">
+		        <div class="form-group" >
 		            <label for="cost">Book Cost</label>
 		            <input  type="text"  class="form-control" name="cost" [(ngModel)]="book.cost" placeholder="Book cost" #cost="ngModel" required [pattern] = "numberpattern"  />
-		             <div *ngIf="f.submitted && !cost.valid" class="help-block">*Book cost is required </div>
-		             <div *ngIf = "f.submitted && !cost.hasError('pattern')"> Only numbers allowed
+		             <div *ngIf="bookform.submitted && cost.errors" class="help-block">*Book cost is required </div>
+		             <div *ngIf = "bookform.submitted && !cost.hasError('pattern')"> Only numbers allowed
 		             </div> 
 		         </div>
 
-		        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !quantity.valid }">
+		        <div class="form-group" >
 		            <label for="quantity">Quantity</label>
 		            <input  type="number"  class="form-control" name="quantity" [(ngModel)]="book.quantity"  #quantity="ngModel" required  min ="0"/>
-		             <div *ngIf="f.submitted && !cost.valid" class="help-block">*Book cost is required </div>
+		             <div *ngIf="bookform.submitted && quantity.valid" class="help-block">*Book cost is required </div>
 		         </div>
 		    </form>
 
       </div> 
       
       <div class="modal-footer" style="text-align: justify;">
-        <button type="button"  class="btn btn-primary" (click) = "submitBook(f)">Save</button>
+        <button type="button"  class="btn btn-primary" (click) = "submitBook(bookform)">Save</button>
         <button type="button" class="btn btn-default c-btn" style="width:15%" (click)="onCloseHandled()">Close</button>
       </div>
   	</div>

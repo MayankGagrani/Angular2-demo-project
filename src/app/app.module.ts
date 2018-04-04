@@ -33,6 +33,9 @@ import { ViewOrderComponent } from './view-order/view-order.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SearchFilterTwoPipe } from './pipe/search-filter-two.pipe';
 import { SortByPipe } from './pipe/sort-by.pipe';
+import { ParentViewComponent } from './parent-view/parent-view.component';
+import { ChildViewComponent } from './child-view/child-view.component';
+import { DatePipe } from '@angular/common';
 //import { MoviesService} from './movies.service'
 
 
@@ -54,7 +57,9 @@ import { SortByPipe } from './pipe/sort-by.pipe';
     ViewOrderComponent,
     ResetPasswordComponent,
     SearchFilterTwoPipe,
-    SortByPipe
+    SortByPipe,
+    ParentViewComponent,
+    ChildViewComponent
     
   ],
   imports: [
@@ -69,7 +74,7 @@ import { SortByPipe } from './pipe/sort-by.pipe';
    BootstrapModalModule.forRoot({container:document.body}),
     ModalModule.forRoot()
   ],
-  providers: [AuthenticationService,UserService,AlertService,fakeBackendProvider,BookService, SharedService],
+  providers: [AuthenticationService,UserService,AlertService,fakeBackendProvider,BookService, SharedService,DatePipe],
   entryComponents: [ModalConfirmComponent,DeleteModalComponent],
   exports: [SearchFilterPipe,SearchFilterTwoPipe,SortByPipe],
   bootstrap: [AppComponent],

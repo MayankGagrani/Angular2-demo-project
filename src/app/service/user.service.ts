@@ -8,11 +8,12 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UserService {
-
+  url:string;
   constructor(private http: HttpClient) { }
 
      getAll() {
-        return this.http.get('/api/users');
+        this.url = "http://localhost:3000/app/v1/"
+        return this.http.get('http://localhost:3000/app/v1/usercontroller');
     }
 
     getById(id: number) {
@@ -24,8 +25,9 @@ export class UserService {
         //.map(response =>  response.json() );
     }
 
-    update(model) {
-        return this.http.put('/api/users/' + model.id, model);
+    update(obj) 
+    {
+        return this.http.put('/api/users/' + obj.model.id, obj.model);
     }
 
     delete(id,currentUser) {

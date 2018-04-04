@@ -69,12 +69,12 @@ export class BooksComponent implements OnInit {
   	this.createBookModal.show();
 
   }
-  public submitBook()
+  public submitBook(form:NgForm){
   
-  // if (!form.valid)
-  // {
-  //   return;
-  // }
+  if (!form.valid)
+  {
+    return;
+  }
 
   {
     let obj = {
@@ -88,6 +88,7 @@ export class BooksComponent implements OnInit {
       this.createBook(obj);
     } 
   }
+}
 
   public createBook(obj){
     this.bookService.create(obj)

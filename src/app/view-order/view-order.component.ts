@@ -58,7 +58,6 @@ export class ViewOrderComponent implements OnInit {
   }
 
   
-
   public returnBook(book){
   	book.issued = false;
   	this.bookService.issueUpdate(book).

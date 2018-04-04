@@ -16,6 +16,26 @@
 							  <a [routerLink]="['/movies']">Movies</a>
 							</li>
 
+								<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+							  <a [routerLink]="['/parentview']">parent view</a>
+							</li>
+							<br>
+							<br>		
+							
+							<div class="MT20" *ngIf="validImage">
+							  <div class="alert alert-danger fade in">
+							    <span class="close" (click)="closeErrorAlert()">x</span> Uploaded image is not a valid image. Only
+							    JPG, PNG image are allowed.
+							  </div>
+							</div>
+							<div>
+								<h5> Upload Image </h5>
+								<span>{{companion.image.file_name}}</span>
+								<!-- <span>{{companion.image.image}}</span> -->
+								<input type = "file" accept = "image/*" (change) = handleInputChange($event)> 
+
+							</div>
+
 							<!-- <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
 							  <a [routerLink]="['/profile']">Profile</a>
 							</li>
@@ -26,6 +46,6 @@
 
 
 							 
-					</div>
+				</div>
 	</div>
 </div>

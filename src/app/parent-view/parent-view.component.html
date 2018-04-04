@@ -1,0 +1,15 @@
+<div class ="container">
+	<div>
+		<h3>Parent Component</h3>
+		<input type = "text" class ="form-control" value = "{{sampledata}}" [(ngModel)] = 'sampledata' />	
+
+		<p> Data from child component : {{sampleChildData}}</p>
+		
+		<hr>
+
+		<div>
+			<app-child-view [parentData]= 'sampledata' (change)='handleChildEvent($event)'></app-child-view>
+		</div>
+	</div>
+</div>
+

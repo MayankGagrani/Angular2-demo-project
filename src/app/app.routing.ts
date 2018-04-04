@@ -12,6 +12,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BooksComponent } from './books/books.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ParentViewComponent } from './parent-view/parent-view.component';
+import { ChildViewComponent } from './child-view/child-view.component';
 
 
 const indexRoutes: Routes = [
@@ -31,6 +33,10 @@ const indexRoutes: Routes = [
    { path: 'resetpassword',component:ResetPasswordComponent, pathMatch: 'full', canActivate: [] },
 
    { path: 'vieworder',component:ViewOrderComponent, pathMatch: 'full', canActivate: [] },
+
+   { path: 'parentview',component:ParentViewComponent, pathMatch: 'full', canActivate: [] },
+
+   { path: 'childview',component:ChildViewComponent, pathMatch: 'full', canActivate: [] },
   // { path: PHMT.ROUTERLINKS.NOACCESS, component: PageNotAuthorizedComponent, pathMatch: 'full', canActivate: []  },
    { path: '**', redirectTo: ''  }
   

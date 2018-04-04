@@ -1,0 +1,9 @@
+<div class= "container" >
+	<div>
+		<p>Data from parent view:<b>{{parentsdata}}</b></p>
+
+		<h3>Child component </h3>
+		<input type = "text" class= "form-control" [(ngModel)] ='ChildData' (ngModelChange)='sendChildData($event)'/>
+
+	</div>
+</div>

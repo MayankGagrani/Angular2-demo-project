@@ -1,5 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, TemplateRef, EventEmitter, Inject, Renderer, Input, OnInit, Output, ViewChild, ElementRef,Pipe, PipeTransform} from '@angular/core';
+import { FormControl, FormGroup, Validators, PatternValidator, NgForm } from '@angular/forms';
+
 import { User } from '../models/user'; 
 import { UserService } from '../service/user.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -9,6 +11,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { HttpModule } from '@angular/http';
 import { ModalConfirmComponent} from '../modal-confirm/modal-confirm.component';
 import { DeleteModalComponent} from '../delete-modal/delete-modal.component';
+import { DatePipe } from '@angular/common';
  
  export interface userModel{
    model: Model;
@@ -33,7 +36,7 @@ import { DeleteModalComponent} from '../delete-modal/delete-modal.component';
   selector: 'app-userlist',
   templateUrl: './userlist.component.html',
   styleUrls: ['./userlist.component.css'],
-  providers: [UserService]
+  providers: [UserService,DatePipe]
 })
 export class UserlistComponent implements OnInit {
 
@@ -44,11 +47,13 @@ export class UserlistComponent implements OnInit {
     public showError:boolean = false;
     public deleteMsg:boolean = false; 
     public alertMessage: string;
-    //public searchInput:any ='';
+    public guide:boolean = false;
+    public showPhoneWar:boolean = false;
     public mask = [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]   
+    public date: string;
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
-  constructor( private router: Router, private userService: UserService, private modalService: BsModalService, private dialogService: DialogService) { 
+  constructor( private router: Router, private userService: UserService, private modalService: BsModalService, private dialogService: DialogService, public datePipe: DatePipe) { 
   	this.users = JSON.parse(localStorage.getItem('users'));
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.model = new Model();
@@ -66,6 +71,7 @@ export class UserlistComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this.date = this.datePipe.transform(new Date(), 'dd/mm/yyyy');
   }
 
   openModal(user){
@@ -103,19 +109,38 @@ export class UserlistComponent implements OnInit {
     });
   }
 
-    updateUser(model) {
+ public keyDownPatientForm(form, event){
+
+    if(event.keycode == 13){
+      this.updateUser(form);
+    }
+  }
+
+    updateUser(form: NgForm) {
+      //this.showPhoneWar = false;
+      if(!form.valid)
+      {
+        return;
+      }
       let obj = {
       "model" : this.model
     };
-    this.userService.update(model)
-      .subscribe((response:any) => {
-          this.updateModal.hide();
-          this.users = response;
-      });
+    if(this.showPhoneWar){
+      return;
+    }
+    //{
+        this.userService.update(obj)
+          .subscribe((response:any) => {
+              this.updateModal.hide();
+              this.users = response;
+          });
+        //}
+        //this.showPhoneWar = false;
      }  
 
     onCloseHandled(){
       this.updateModal.hide();
+      //window.location.reload();
     }
 
     public showConfirm(user)
@@ -129,6 +154,34 @@ export class UserlistComponent implements OnInit {
         });
 
     }
+
+    public omit_special_char(event)
+    {
+    var regex = new RegExp("^[a-zA-Z_ ]+|[\b]*$");
+    var key = String.fromCharCode(!event.charCode ? event.which: event.charCode )
+    if(!regex.test(key)){
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  public validatePhoneNumberLength(event){
+    if (event) { 
+      //this.showPhoneWar = false;
+      var updatedLength = event.length;
+      if (updatedLength == 12 || updatedLength == 0) {
+        this.showPhoneWar = false;
+      }
+      else
+      {
+        this.showPhoneWar = true;
+      }
+    }
+    else {
+      this.showPhoneWar = false;
+    }
+
+  }
 
     public closeErrorAlert(){
       if(this.deleteMsg == true)

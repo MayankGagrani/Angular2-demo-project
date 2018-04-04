@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Pipe, PipeTransform} from '@angular/core';
 import { Router } from '@angular/router';
 import {UserService} from '../service/user.service';
 import { AlertService } from '../service/alert.service';
 import { FormControl, FormGroup, Validators, PatternValidator, NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 
 export interface registerModel{
@@ -20,10 +21,13 @@ export class Model{
   role: string;
 }
 
+@Pipe({ name: 'DatePipe'})
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [DatePipe]
 })
 export class RegisterComponent implements OnInit {
 
@@ -32,12 +36,14 @@ export class RegisterComponent implements OnInit {
   public showError:boolean= false;
   public model:Model;
   public loading = false;
+  public guide: boolean = false;
   public showPhoneWar:boolean = false; 
-  pwdPattern = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{6,12}$";
+  public date_of_birth: string = '2016/12/25';
   public mask = [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  public date: string;
   
 
-  constructor(private router: Router, private userService: UserService, private alertService: AlertService) { 
+  constructor(private router: Router, private userService: UserService, private alertService: AlertService, private datePipe : DatePipe) { 
     this.model = new Model();
     this.model.firstName = '';
     this.model.lastName = '';
@@ -51,14 +57,18 @@ export class RegisterComponent implements OnInit {
   }
   ngOnInit() {
     // this.msg = "Registration successful";
+    this.date = this.datePipe.transform(new Date(), 'dd/mm/yyyy');
 
   }
 
-  public register(form:NgForm) {
+  public register(form : NgForm) {
     if (!form.valid) {
       return;
     }
-    // this.loading = true;
+    if(this.showPhoneWar){
+      return;
+    }
+    this.loading = true;
     let obj = {
       "model" : this.model
     };
@@ -94,6 +104,16 @@ export class RegisterComponent implements OnInit {
       this.showPhoneWar = false;
     }
 
+  }
+  
+  public omit_special_char(event)
+  {
+    var regex = new RegExp("^[a-zA-Z_ ]+|[\b]*$");
+    var key = String.fromCharCode(!event.charCode ? event.which: event.charCode )
+    if(!regex.test(key)){
+      event.preventDefault();
+      return false;
+    }
   }
 
 }
